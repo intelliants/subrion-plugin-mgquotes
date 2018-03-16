@@ -1,51 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module type="plugin" name="mgquotes">
-	<title>mgQuotes</title>
-	<summary>Contains over 2500 quotes of famous people sorted by several categories</summary>
-	<author>ModsGuru</author>
-	<contributor>ModsGuru</contributor>
-	<version>4.1.0</version>
-	<date>2017-02-22</date>
-	<compatibility>4.1</compatibility>
+    <title>mgQuotes</title>
+    <summary>Contains over 2500 quotes of famous people sorted by several categories</summary>
+    <author>ModsGuru</author>
+    <contributor>ModsGuru</contributor>
+    <version>4.2.0</version>
+    <date>2018-03-16</date>
+    <compatibility>4.2</compatibility>
 
-	<hooks>
-		<hook name="phpCoreBeforePageDisplay" page_type="front">
-			<![CDATA[
-if (iaView::REQUEST_HTML == $iaView->getRequestType())
-{
-	$random_quote = $iaCore->iaDb->row(iaDb::ALL_COLUMNS_SELECTION, '1=1 ORDER BY RAND()', 'mg_quotes');
-	$out_quote = '<strong>' . $random_quote['Name'] . '</strong>: ' . $random_quote['Quote'];
-	$iaView->assign('random_quote', $out_quote);
-}
-			]]>
-		</hook>
-	</hooks>
+    <hooks>
+        <hook name="phpCoreBeforePageDisplay" type="php" page_type="front" filename="hook.mgquotes.php"><![CDATA[]]></hook>
+    </hooks>
 
-	<phrases>
-		<phrase key="today_quote" category="frontend">Quote Of The Day:</phrase>
-	</phrases>
+    <phrases>
+        <phrase key="today_quote" category="frontend">Quote Of The Day:</phrase>
+    </phrases>
 
-	<install>
-		<sql>
-			<![CDATA[
+    <install>
+        <sql>
+            <![CDATA[
 CREATE TABLE IF NOT EXISTS `{prefix}mg_quotes` (
-	`Quote_ID` int(11) NOT NULL auto_increment,
-	`Name` varchar(100) default NULL,
-	`Quote_Category` varchar(50) default NULL,
-	`Quote` text,
-	PRIMARY KEY  (`Quote_ID`)
+    `Quote_ID` int(11) NOT NULL auto_increment,
+    `Name` varchar(100) default NULL,
+    `Quote_Category` varchar(50) default NULL,
+    `Quote` text,
+    PRIMARY KEY  (`Quote_ID`)
 ) {mysql_version};
-			]]>
-		</sql>
+            ]]>
+        </sql>
 
-		<sql external="1">dumps/quotes.zip</sql>
-	</install>
+        <sql external="1">dumps/quotes.zip</sql>
+    </install>
 
-	<uninstall>
-		<sql>
-			<![CDATA[
+    <uninstall>
+        <sql>
+            <![CDATA[
 DROP TABLE IF EXISTS `{prefix}mg_quotes`;
-			]]>
-		</sql>
-	</uninstall>
+            ]]>
+        </sql>
+    </uninstall>
 </module>
